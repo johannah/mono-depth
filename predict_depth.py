@@ -10,6 +10,7 @@ import matplotlib.pyplot as plt
 from deconv import TransposeConv2DLayer, Unpool2DLayer
 
 import os
+import pickle
 from scipy.misc import face
 from scipy.misc import imread, imresize
 from scipy.io import loadmat
@@ -160,6 +161,13 @@ for e in range(n_epochs):
         print("loading minibatch: %s" %mbn)
         print("train: %f" % train_loss)
         print("valid %f" % valid_loss)
+    if not e%10:
+        pickle.dump({"train_function":train_function,
+                     "valid_function":valid_function,
+                     "predict_function":predict_function},
+                    open("pd_e%03d.pkl" %e, mode='wb'))
+
+
 
 inum = 0
 dpredict = predict_function(X_train[inum,:,:,:][None,:,:,:])
