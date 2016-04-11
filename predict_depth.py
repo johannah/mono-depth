@@ -23,15 +23,16 @@ random_state = np.random.RandomState(1999)
 
 DEBUG = True
 dataset = 'data2'
-volume_path = '/Volumes/johannah_external/mono_depth/cornell_dataset/'
-n_epochs = 1
-minibatchsize = 50
+#volume_path = '/Volumes/johannah_external/mono_depth/cornell_dataset/'
+volume_path = '/media/jhansen/johannah_external/mono_depth/cornell_dataset/'
+n_epochs = 1000
+minibatchsize = 10
 
 
 def collect_data():
     if (dataset == 'data2') or (dataset == 'data3'):
         ipath = os.path.join(volume_path, dataset)
-        isearch = os.path.join(ipath, 'images', '*.jpg')
+        isearch = os.path.join(ipath, 'small_images', '*.jpg')
         images = glob(isearch)
 
         dsearch = os.path.join(ipath, 'depthmaps', '*.mat')
@@ -50,7 +51,7 @@ def collect_data():
             if de in dnames:
                 iout.append(images[xx])
                 dout.append(dmaps[xx])
-        print("FOUND %s matching" %len(iout))
+        print("FOUND %s matching images and depths" %len(iout))
         return sorted(iout), sorted(dout)
 
 def load_data(images, dmaps):
@@ -69,7 +70,7 @@ def load_data(images, dmaps):
         # if you want to resize the depth to be the same as the image
         depf = imresize(depf, imgf.shape[:2])
         imgf = imgf.transpose(2,0,1)
-        print("MY SIZES", xx, os.path.split(images[xx])[1], imgf.shape, depf.shape)
+        #print("MY SIZES", xx, os.path.split(images[xx])[1], imgf.shape, depf.shape)
         ifiles.append(imgf)
         dfiles.append(depf)
 
@@ -154,11 +155,11 @@ for e in range(n_epochs):
     for mbn in range(0,num_images,minibatchsize):
         X_train, y_train = load_data(images[mbn:mbn+minibatchsize],
                                       dmaps[mbn:mbn+minibatchsize])
-        #train_loss = train_function(X_train, y_train)
-        #valid_loss = valid_function(X_train, y_train)
+        train_loss = train_function(X_train, y_train)
+        valid_loss = valid_function(X_train, y_train)
         print("loading minibatch: %s" %mbn)
-        #print("train: %f" % train_loss)
-        #print("valid %f" % valid_loss)
+        print("train: %f" % train_loss)
+        print("valid %f" % valid_loss)
 
 inum = 0
 dpredict = predict_function(X_train[inum,:,:,:][None,:,:,:])
