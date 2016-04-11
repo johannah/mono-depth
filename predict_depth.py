@@ -24,8 +24,8 @@ random_state = np.random.RandomState(1999)
 DEBUG = True
 dataset = 'data2'
 volume_path = '/Volumes/johannah_external/mono_depth/cornell_dataset/'
-n_epochs = 10
-minibatchsize = 10
+n_epochs = 1
+minibatchsize = 50
 
 
 def collect_data():
@@ -69,6 +69,7 @@ def load_data(images, dmaps):
         # if you want to resize the depth to be the same as the image
         depf = imresize(depf, imgf.shape[:2])
         imgf = imgf.transpose(2,0,1)
+        print("MY SIZES", xx, os.path.split(images[xx])[1], imgf.shape, depf.shape)
         ifiles.append(imgf)
         dfiles.append(depf)
 
@@ -99,6 +100,7 @@ def plot_img_dep(imgf, depf, depp):
 
 # get list of the images and depthmaps to work with
 images, dmaps = collect_data()
+num_images = len(images)
 X_train, y_train = load_data(images[0:minibatchsize],
                              dmaps[0:minibatchsize])
 
@@ -148,11 +150,13 @@ predict_function = theano.function([input_var], prediction)
 
 for e in range(n_epochs):
 
-    for mbn in range(0,len(images),minibatchsize):
+    print("working on epoch: %s" %e)
+    for mbn in range(0,num_images,minibatchsize):
         X_train, y_train = load_data(images[mbn:mbn+minibatchsize],
                                       dmaps[mbn:mbn+minibatchsize])
         #train_loss = train_function(X_train, y_train)
         #valid_loss = valid_function(X_train, y_train)
+        print("loading minibatch: %s" %mbn)
         #print("train: %f" % train_loss)
         #print("valid %f" % valid_loss)
 
