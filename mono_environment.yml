@@ -1,0 +1,108 @@
+name: py3mono
+dependencies:
+- decorator=4.0.9=py35_0
+- freetype=2.5.5=0
+- ipython=4.1.2=py35_1
+- ipython_genutils=0.1.0=py35_0
+- jbig=2.1=0
+- jpeg=8d=0
+- libgfortran=3.0=0
+- libpng=1.6.17=0
+- libtiff=4.0.6=1
+- mkl=11.3.1=0
+- numpy=1.10.4=py35_1
+- openssl=1.0.2g=0
+- path.py=8.1.2=py35_1
+- pexpect=4.0.1=py35_0
+- pickleshare=0.5=py35_0
+- pillow=3.2.0=py35_0
+- pip=8.1.1=py35_1
+- ptyprocess=0.5=py35_0
+- python=3.5.1=0
+- readline=6.2=2
+- scipy=0.17.0=np110py35_2
+- setuptools=20.6.7=py35_0
+- simplegeneric=0.8.1=py35_0
+- sqlite=3.9.2=0
+- theano=0.7.0=np110py35_0
+- tk=8.5.18=0
+- traitlets=4.2.1=py35_0
+- wheel=0.29.0=py35_0
+- xz=5.0.5=1
+- zlib=1.2.8=0
+- pip:
+  - actionlib==1.11.3
+  - base-local-planner==1.12.7
+  - bondpy==1.7.16
+  - camera-calibration-parsers==1.11.10
+  - capabilities==0.2.0
+  - catkin==0.6.16
+  - create-driver==2.3.0
+  - create-node==2.3.0
+  - cv-bridge==1.11.11
+  - cycler==0.10.0
+  - diagnostic-updater==1.8.8
+  - dynamic-reconfigure==1.5.38
+  - gazebo-plugins==2.4.9
+  - gazebo-ros==2.4.9
+  - gencpp==0.5.3
+  - genlisp==0.4.15
+  - genmsg==0.5.6
+  - genpy==0.5.7
+  - image-geometry==1.11.11
+  - ipython-genutils==0.1.0
+  - lasagne==0.1
+  - laser-geometry==1.6.4
+  - matplotlib==1.5.1
+  - message-filters==1.11.16
+  - pluginlib==1.10.1
+  - pyparsing==2.1.1
+  - python-dateutil==2.5.2
+  - pytz==2016.3
+  - rocon-app-manager==0.7.13
+  - rocon-app-utilities==0.7.13
+  - rocon-apps==0.7.13
+  - rocon-console==0.1.23
+  - rocon-ebnf==0.1.23
+  - rocon-gateway==0.7.10
+  - rocon-gateway-utils==0.7.10
+  - rocon-hub==0.7.10
+  - rocon-hub-client==0.7.10
+  - rocon-interactions==0.1.23
+  - rocon-master-info==0.1.23
+  - rocon-python-comms==0.1.23
+  - rocon-python-redis==0.1.23
+  - rocon-python-utils==0.1.23
+  - rocon-python-wifi==0.1.23
+  - rocon-semantic-version==0.1.23
+  - rocon-uri==0.1.23
+  - rosbag==1.11.16
+  - rosboost-cfg==1.11.11
+  - rosclean==1.11.11
+  - roscreate==1.11.11
+  - rosgraph==1.11.16
+  - roslaunch==1.11.16
+  - roslib==1.11.11
+  - roslz4==1.11.16
+  - rosmake==1.11.11
+  - rosmaster==1.11.16
+  - rosmsg==1.11.16
+  - rosnode==1.11.16
+  - rosparam==1.11.16
+  - rospy==1.11.16
+  - rospy-message-converter==0.4.0
+  - rosservice==1.11.16
+  - rostest==1.11.16
+  - rostopic==1.11.16
+  - rosunit==1.11.11
+  - roswtf==1.11.16
+  - sensor-msgs==1.11.8
+  - six==1.10.0
+  - smclib==1.7.16
+  - tf==1.11.7
+  - tf2-kdl==0.5.12
+  - tf2-py==0.5.12
+  - tf2-ros==0.5.12
+  - unique-id==1.0.5
+  - xacro==1.9.5
+
