@@ -21,53 +21,61 @@ import theano
 
 random_state = np.random.RandomState(1999)
 
+DEBUG = True
 dataset = 'data2'
 volume_path = '/Volumes/johannah_external/mono_depth/cornell_dataset/'
-only_this_many = -1
-n_epochs = 1
+n_epochs = 10
+minibatchsize = 10
 
-def load_data():
-    # input data - create empty dimensions because
-    # conv nets take in 4d arrays [b,c,0,1]
-    # seems to need even number of pixels
-    # seems to need even number of pixels
+
+def collect_data():
     if (dataset == 'data2') or (dataset == 'data3'):
         ipath = os.path.join(volume_path, dataset)
         isearch = os.path.join(ipath, 'images', '*.jpg')
         images = glob(isearch)
-        inames = [os.path.split(xx)[1] for xx in images]
 
         dsearch = os.path.join(ipath, 'depthmaps', '*.mat')
         dmaps = glob(dsearch)
+
+        inames = [os.path.split(xx)[1] for xx in images]
         dnames = [os.path.split(xx)[1] for xx in dmaps]
+        depn_exp = [ii.replace('img', 'depth').replace('.jpg', '.mat') for ii in inames]
+        depn_exp = []
 
-        ifiles = []
-        dfiles = []
-        print("loading %s images and depthmaps" %len(images))
-        for xx,ii in enumerate(images[:only_this_many]):
-            imgn = inames[xx]
-            depn = imgn.replace('img', 'depth').replace('.jpg', '.mat')
-            if depn in dnames:
-                dnum = dnames.index(depn)
-                #print("loading depthmap:%s and image:%s" %(depn, imgn))
-                imgf = imread(images[xx])
-                depf = loadmat(dmaps[xx])['depthMap']
-                # if you want to resize the depth to be the same as the image
-                depf = imresize(depf, imgf.shape[:2])
-                imgf = imgf.transpose(2,0,1)
-                ifiles.append(imgf)
-                dfiles.append(depf)
-            else:
-                print("could not find depthmap: %s for image: %s" %(depn, imgn))
+        iout = []
+        dout = []
 
-    else:
-        print("dataset not defined")
-        raise
+        for xx,ii in enumerate(inames):
+            de = ii.replace('img', 'depth').replace('.jpg', '.mat')
+            if de in dnames:
+                iout.append(images[xx])
+                dout.append(dmaps[xx])
+        print("FOUND %s matching" %len(iout))
+        return sorted(iout), sorted(dout)
+
+def load_data(images, dmaps):
+    # input data - create empty dimensions because
+    # conv nets take in 4d arrays [b,c,0,1]
+    # seems to need even number of pixels
+    # seems to need even number of pixels
+
+    numi = len(images)
+    ifiles = []
+    dfiles = []
+    print("loading %s images and depthmaps" %numi)
+    for xx in range(numi):
+        imgf = imread(images[xx])
+        depf = loadmat(dmaps[xx])['depthMap']
+        # if you want to resize the depth to be the same as the image
+        depf = imresize(depf, imgf.shape[:2])
+        imgf = imgf.transpose(2,0,1)
+        ifiles.append(imgf)
+        dfiles.append(depf)
+
     # normalize
     X = np.asarray(ifiles).astype('float32')/255.
     y = np.asarray(dfiles).astype('float32')/255.
     y = y[:,None,:,:]
-
     return X, y
 
 def plot_img_dep(imgf, depf, depp):
@@ -89,16 +97,19 @@ def plot_img_dep(imgf, depf, depp):
     plt.show()
 
 
-# example image for dataset2
-X_train, y_train = load_data()
+# get list of the images and depthmaps to work with
+images, dmaps = collect_data()
+X_train, y_train = load_data(images[0:minibatchsize],
+                             dmaps[0:minibatchsize])
+
+# theano land tensor4 for 4 dimensions
+input_var = tensor.tensor4('X')
+target_var = tensor.tensor4('y')
 outchan = y_train.shape[1]
 inchan = X_train.shape[1]
 width = X_train.shape[2]
 height = X_train.shape[3]
 
-# theano land tensor4 for 4 dimensions
-input_var = tensor.tensor4('X')
-target_var = tensor.tensor4('y')
 input_var.tag.test_value = X_train
 target_var.tag.test_value = y_train
 
@@ -134,11 +145,16 @@ train_function = theano.function([input_var, target_var], train_loss,
 valid_function = theano.function([input_var, target_var], valid_loss)
 predict_function = theano.function([input_var], prediction)
 
+
 for e in range(n_epochs):
-    train_loss = train_function(X_train, y_train)
-    valid_loss = valid_function(X_train, y_train)
-    print("train: %f" % train_loss)
-    print("valid %f" % valid_loss)
+
+    for mbn in range(0,len(images),minibatchsize):
+        X_train, y_train = load_data(images[mbn:mbn+minibatchsize],
+                                      dmaps[mbn:mbn+minibatchsize])
+        #train_loss = train_function(X_train, y_train)
+        #valid_loss = valid_function(X_train, y_train)
+        #print("train: %f" % train_loss)
+        #print("valid %f" % valid_loss)
 
 inum = 0
 dpredict = predict_function(X_train[inum,:,:,:][None,:,:,:])
