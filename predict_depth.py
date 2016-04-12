@@ -121,7 +121,7 @@ for e in range(n_epochs):
         print("loading minibatch: %s in epoch: %s " %(mbn, e))
         print("train: %f" % train_loss)
         print("valid %f" % valid_loss)
-    if not e%40:
+    if not e%10:
         fn = "trained/pda_e%03d.pkl" %e
         print("dumping to pickle: %s" %fn)
         pickle.dump({"train_function":train_function,

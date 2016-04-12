@@ -423,7 +423,7 @@ class Unpool2DLayer(Layer):
         ds = self.ds
         input_shape = input.shape
         output_shape = self.get_output_shape_for(input_shape)
-        return input.repeat(2, axis=2).repeat(2, axis=3)
+        return input.repeat(self.ds[0], axis=2).repeat(self.ds[1], axis=3)
 
 def t_conv_out_size(input_size, filter_size, stride, pad):
     """Computes the length of the output of a transposed convolution
