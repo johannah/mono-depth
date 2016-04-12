@@ -1,34 +1,165 @@
-name: py3mono
+name: mono3
 dependencies:
+- alabaster=0.7.7=py35_0
+- anaconda=4.0.0=np110py35_0
+- anaconda-client=1.4.0=py35_0
+- anaconda-navigator=1.1.0=py35_0
+- argcomplete=1.0.0=py35_1
+- astropy=1.1.2=np110py35_0
+- babel=2.2.0=py35_0
+- beautifulsoup4=4.4.1=py35_0
+- bitarray=0.8.1=py35_0
+- blaze=0.9.1=py35_0
+- bokeh=0.11.1=py35_0
+- boto=2.39.0=py35_0
+- bottleneck=1.0.0=np110py35_0
+- cffi=1.5.2=py35_0
+- chest=0.2.3=py35_0
+- cloudpickle=0.1.1=py35_0
+- clyent=1.2.1=py35_0
+- colorama=0.3.7=py35_0
+- conda-manager=0.3.1=py35_0
+- configobj=5.0.6=py35_0
+- cryptography=1.3=py35_0
+- curl=7.45.0=0
+- cycler=0.10.0=py35_0
+- cython=0.23.4=py35_0
+- cytoolz=0.7.5=py35_0
+- dask=0.8.1=py35_0
+- datashape=0.5.1=py35_0
 - decorator=4.0.9=py35_0
+- dill=0.2.4=py35_0
+- docutils=0.12=py35_0
+- dynd-python=0.7.2=py35_0
+- et_xmlfile=1.0.1=py35_0
+- fastcache=1.0.2=py35_0
+- flask=0.10.1=py35_1
+- flask-cors=2.1.2=py35_0
+- fontconfig=2.11.1=5
 - freetype=2.5.5=0
+- gevent=1.1.0=py35_0
+- greenlet=0.4.9=py35_0
+- h5py=2.5.0=np110py35_4
+- hdf5=1.8.15.1=2
+- heapdict=1.0.0=py35_0
+- idna=2.0=py35_0
+- ipykernel=4.3.1=py35_0
 - ipython=4.1.2=py35_1
 - ipython_genutils=0.1.0=py35_0
+- ipywidgets=4.1.1=py35_0
+- itsdangerous=0.24=py35_0
 - jbig=2.1=0
+- jdcal=1.2=py35_0
+- jedi=0.9.0=py35_0
+- jinja2=2.8=py35_0
 - jpeg=8d=0
+- jsonschema=2.4.0=py35_0
+- jupyter=1.0.0=py35_2
+- jupyter_client=4.2.2=py35_0
+- jupyter_console=4.1.1=py35_0
+- jupyter_core=4.1.0=py35_0
+- libdynd=0.7.2=0
+- libffi=3.0.13=0
 - libgfortran=3.0=0
 - libpng=1.6.17=0
+- libsodium=1.0.3=0
 - libtiff=4.0.6=1
+- libxml2=2.9.2=0
+- libxslt=1.1.28=0
+- llvmlite=0.9.0=py35_0
+- locket=0.2.0=py35_0
+- lxml=3.6.0=py35_0
+- markupsafe=0.23=py35_0
+- matplotlib=1.5.1=np110py35_0
+- mistune=0.7.2=py35_0
 - mkl=11.3.1=0
+- mkl-service=1.1.2=py35_0
+- mpmath=0.19=py35_0
+- multipledispatch=0.4.8=py35_0
+- nbconvert=4.1.0=py35_0
+- nbformat=4.0.1=py35_0
+- networkx=1.11=py35_0
+- nltk=3.2=py35_0
+- nose=1.3.7=py35_0
+- notebook=4.1.0=py35_1
+- numba=0.24.0=np110py35_0
+- numexpr=2.5=np110py35_0
 - numpy=1.10.4=py35_1
+- odo=0.4.2=py35_0
+- openpyxl=2.3.2=py35_0
 - openssl=1.0.2g=0
+- pandas=0.18.0=np110py35_0
+- partd=0.3.2=py35_1
+- patchelf=0.8=0
 - path.py=8.1.2=py35_1
+- patsy=0.4.0=np110py35_0
+- pep8=1.7.0=py35_0
 - pexpect=4.0.1=py35_0
 - pickleshare=0.5=py35_0
-- pillow=3.2.0=py35_0
+- pillow=3.1.1=py35_0
 - pip=8.1.1=py35_1
+- ply=3.8=py35_0
+- psutil=4.1.0=py35_0
 - ptyprocess=0.5=py35_0
+- py=1.4.31=py35_0
+- pyasn1=0.1.9=py35_0
+- pycosat=0.6.1=py35_0
+- pycparser=2.14=py35_0
+- pycrypto=2.6.1=py35_0
+- pycurl=7.19.5.3=py35_0
+- pyflakes=1.1.0=py35_0
+- pygments=2.1.1=py35_0
+- pyopenssl=0.15.1=py35_2
+- pyparsing=2.0.3=py35_0
+- pyqt=4.11.4=py35_1
+- pytables=3.2.2=np110py35_1
+- pytest=2.8.5=py35_0
 - python=3.5.1=0
+- python-dateutil=2.5.1=py35_0
+- pytz=2016.2=py35_0
+- pyyaml=3.11=py35_1
+- pyzmq=15.2.0=py35_0
+- qt=4.8.7=1
+- qtawesome=0.3.2=py35_0
+- qtconsole=4.2.0=py35_0
+- qtpy=1.0=py35_0
 - readline=6.2=2
+- redis=2.6.9=0
+- redis-py=2.10.3=py35_0
+- requests=2.9.1=py35_0
+- rope=0.9.4=py35_1
+- scikit-image=0.12.3=np110py35_0
+- scikit-learn=0.17.1=np110py35_0
 - scipy=0.17.0=np110py35_2
-- setuptools=20.6.7=py35_0
+- setuptools=20.3=py35_0
 - simplegeneric=0.8.1=py35_0
+- singledispatch=3.4.0.3=py35_0
+- sip=4.16.9=py35_0
+- six=1.10.0=py35_0
+- snowballstemmer=1.2.1=py35_0
+- sockjs-tornado=1.0.1=py35_0
+- sphinx=1.3.5=py35_0
+- sphinx_rtd_theme=0.1.9=py35_0
+- spyder=2.3.8=py35_1
+- sqlalchemy=1.0.12=py35_0
 - sqlite=3.9.2=0
-- theano=0.7.0=np110py35_0
+- statsmodels=0.6.1=np110py35_0
+- sympy=1.0=py35_0
+- terminado=0.5=py35_1
 - tk=8.5.18=0
+- toolz=0.7.4=py35_0
+- tornado=4.3=py35_0
 - traitlets=4.2.1=py35_0
+- unicodecsv=0.14.1=py35_0
+- util-linux=2.21=0
+- werkzeug=0.11.4=py35_0
 - wheel=0.29.0=py35_0
+- xlrd=0.9.4=py35_0
+- xlsxwriter=0.8.4=py35_0
+- xlwt=1.0.0=py35_0
 - xz=5.0.5=1
+- yaml=0.1.6=0
+- zeromq=4.1.3=0
 - zlib=1.2.8=0
 - pip:
   - actionlib==1.11.3
@@ -40,9 +171,10 @@ dependencies:
   - create-driver==2.3.0
   - create-node==2.3.0
   - cv-bridge==1.11.11
-  - cycler==0.10.0
   - diagnostic-updater==1.8.8
   - dynamic-reconfigure==1.5.38
+  - dynd==0.7.3.dev1
+  - et-xmlfile==1.0.1
   - gazebo-plugins==2.4.9
   - gazebo-ros==2.4.9
   - gencpp==0.5.3
@@ -51,14 +183,13 @@ dependencies:
   - genpy==0.5.7
   - image-geometry==1.11.11
   - ipython-genutils==0.1.0
-  - lasagne==0.1
+  - jupyter-client==4.2.2
+  - jupyter-console==4.1.1
+  - jupyter-core==4.1.0
+  - lasagne==0.2.dev1
   - laser-geometry==1.6.4
-  - matplotlib==1.5.1
   - message-filters==1.11.16
   - pluginlib==1.10.1
-  - pyparsing==2.1.1
-  - python-dateutil==2.5.2
-  - pytz==2016.3
   - rocon-app-manager==0.7.13
   - rocon-app-utilities==0.7.13
   - rocon-apps==0.7.13
@@ -76,6 +207,7 @@ dependencies:
   - rocon-python-wifi==0.1.23
   - rocon-semantic-version==0.1.23
   - rocon-uri==0.1.23
+  - rope-py3k==0.9.4.post1
   - rosbag==1.11.16
   - rosboost-cfg==1.11.11
   - rosclean==1.11.11
@@ -97,12 +229,14 @@ dependencies:
   - rosunit==1.11.11
   - roswtf==1.11.16
   - sensor-msgs==1.11.8
-  - six==1.10.0
   - smclib==1.7.16
+  - sphinx-rtd-theme==0.1.9
+  - tables==3.2.2
   - tf==1.11.7
   - tf2-kdl==0.5.12
   - tf2-py==0.5.12
   - tf2-ros==0.5.12
+  - theano==0.8.0
   - unique-id==1.0.5
   - xacro==1.9.5
 
