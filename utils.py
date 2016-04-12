@@ -1,0 +1,95 @@
+import os
+import sys
+from glob import glob
+import matplotlib.pyplot as plt
+from scipy.misc import imread, imresize
+from scipy.io import loadmat
+import numpy as np
+
+
+def collect_data(volume_path, dataset):
+    print("volume_path", volume_path, dataset)
+    if (dataset == 'data2') or (dataset == 'data3'):
+        ipath = os.path.join(volume_path, dataset)
+        isearch = os.path.join(ipath, 'small_images', '*.jpg')
+        images = glob(isearch)
+
+        dsearch = os.path.join(ipath, 'depthmaps', '*.mat')
+        dmaps = glob(dsearch)
+
+        inames = [os.path.split(xx)[1] for xx in images]
+        dnames = [os.path.split(xx)[1] for xx in dmaps]
+        depn_exp = [ii.replace('img', 'depth').replace('.jpg', '.mat') for ii in inames]
+        depn_exp = []
+
+        iout = []
+        dout = []
+
+        for xx,ii in enumerate(inames):
+            de = ii.replace('img', 'depth').replace('.jpg', '.mat')
+            if de in dnames:
+                fxx = dnames.index(de)
+                iout.append(images[xx])
+                dout.append(dmaps[fxx])
+        print("FOUND %s matching images and depths" %len(iout))
+        return sorted(iout), sorted(dout)
+
+def load_data(images, dmaps):
+    # input data - create empty dimensions because
+    # conv nets take in 4d arrays [b,c,0,1]
+    # seems to need even number of pixels
+    # seems to need even number of pixels
+    numi = len(images)
+    ifiles = []
+    dfiles = []
+    print("loading %s images and depthmaps" %numi)
+    for xx in range(numi):
+        imgf = imread(images[xx])
+        depf = loadmat(dmaps[xx])['depthMap']
+        # if you want to resize the depth to be the same as the image
+        depf = imresize(depf, imgf.shape[:2])
+        imgf = imgf.transpose(2,0,1)
+        #print("MY SIZES", xx, os.path.split(images[xx])[1], imgf.shape, depf.shape)
+        ifiles.append(imgf)
+        dfiles.append(depf)
+
+    # normalize
+    X = np.asarray(ifiles).astype('float32')/255.
+    y = np.asarray(dfiles).astype('float32')/255.
+    y = np.log(y+1)
+    y = y[:,None,:,:]
+    return X, y
+
+
+def plot_img_dep(imgf, depf, depp):
+    # row and column sharing
+    print(imgf.dtype, depf.dtype, depp.dtype)
+    fig = plt.figure(frameon=False, figsize=(10,8))
+    ax1 = fig.add_subplot(1,3,1)
+    ax1.imshow(imgf)
+    plt.title("Image")
+    ax2 = fig.add_subplot(1,3,2)
+    ax2.imshow(depf)
+    plt.title("Ground Truth Depth")
+    ax3 = fig.add_subplot(1,3,3)
+    ax3.imshow(depp)
+    plt.title("Estimated Depth")
+    ax1.axes.xaxis.set_ticklabels([])
+    ax1.axes.yaxis.set_ticklabels([])
+    ax2.axes.xaxis.set_ticklabels([])
+    ax2.axes.yaxis.set_ticklabels([])
+    ax3.axes.xaxis.set_ticklabels([])
+    ax3.axes.yaxis.set_ticklabels([])
+    plt.show()
+
+def rmse(arr1,arr2):
+    # expect shapes to be equal
+    err = np.sum((arr1-arr2)**2)
+    err /= float(arr1.shape[0]*arr1.shape[1])
+    return np.sqrt(err)
+
+
+def norm(arr):
+    # expects numpy array
+    # normalize between 0 and 1
+    return (arr-arr.min())/(arr.max()-arr.min())
