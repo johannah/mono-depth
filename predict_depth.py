@@ -20,18 +20,23 @@ sys.setrecursionlimit(40000)
 random_state = np.random.RandomState(1999)
 
 DEBUG = True
-dataset = 'data2'
+dataset = 'data3'
 #volume_path = '/Volumes/johannah_external/mono_depth/cornell_dataset/'
 #volume_path = '/media/jhansen/johannah_external/mono_depth/cornell_dataset/'
 volume_path = '../data/'
 n_epochs = 1000
-minibatchsize = 1
+minibatchsize = 20
 
 
 images, dmaps = collect_data(volume_path, dataset)
-num_images = 1 #len(images)
+# only keep minibatch divisible num data
+num_images = len(images) - (len(images) % minibatchsize)
+images = images[:num_images]
+dmaps = dmaps[:num_images]
+print("Using %s images" %num_images)
 X_train, y_train = load_data(images[0:minibatchsize],
                              dmaps[0:minibatchsize])
+
 
 # theano land tensor4 for 4 dimensions
 input_var = tensor.tensor4('X')
@@ -57,10 +62,20 @@ coarse_conv2 = Conv2DLayer(coarse_pool1, num_filters=64, filter_size=(3, 3),
 
 coarse_pool2 = MaxPool2DLayer(coarse_conv2, pool_size=(2, 2))
 
-coarse_conv3 = Conv2DLayer(coarse_pool2, num_filters=32, filter_size=(1, 1),
+coarse_conv3 = Conv2DLayer(coarse_pool2, num_filters=128, filter_size=(3, 3),
+                      nonlinearity=rectify, W=GlorotUniform(), pad=(1,1))
+
+coarse_conv4 = Conv2DLayer(coarse_conv3, num_filters=128, filter_size=(3, 3),
+                      nonlinearity=rectify, W=GlorotUniform(), pad=(1,1))
+
+#coarse_conv4 = Conv2DLayer(coarse_conv3, num_filters=64, filter_size=(3, 3),
+#                      nonlinearity=rectify, W=GlorotUniform(), pad=(1,1))
+#coarse_pool3 = MaxPool2DLayer(coarse_conv3, pool_size=(2, 2))
+coarse_conv5 = Conv2DLayer(coarse_conv4, num_filters=512, filter_size=(1, 1),
                       nonlinearity=rectify, W=GlorotUniform())
 
-coarse_depool1 = Unpool2DLayer(coarse_conv3, (4,4))
+coarse_depool1 = Unpool2DLayer(coarse_conv5, (4,4))
+
 coarse_deconv1 = TransposeConv2DLayer(coarse_depool1,
                                       num_filters=outchan,
                                       filter_size=(5,5),
@@ -94,11 +109,11 @@ predict_function = theano.function([input_var], prediction)
 train_losses = []
 valid_losses = []
 for e in range(n_epochs):
-    if 1:
-        mbn = 1
-#    for mbn in range(0,num_images,minibatchsize):
-#        X_train, y_train = load_data(images[mbn:mbn+minibatchsize],
-#                                      dmaps[mbn:mbn+minibatchsize])
+    for mbn in range(0,num_images,minibatchsize):
+
+
+        X_train, y_train = load_data(images[mbn:mbn+minibatchsize],
+                                      dmaps[mbn:mbn+minibatchsize])
         train_loss = train_function(X_train, y_train)
         valid_loss = valid_function(X_train, y_train)
         train_losses.append(train_loss)
@@ -106,7 +121,7 @@ for e in range(n_epochs):
         print("loading minibatch: %s in epoch: %s " %(mbn, e))
         print("train: %f" % train_loss)
         print("valid %f" % valid_loss)
-    if not e%10:
+    if not e%40:
         fn = "trained/pda_e%03d.pkl" %e
         print("dumping to pickle: %s" %fn)
         pickle.dump({"train_function":train_function,
