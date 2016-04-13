@@ -49,7 +49,6 @@ def load_data(images, dmaps):
         # if you want to resize the depth to be the same as the image
         depf = imresize(depf, imgf.shape[:2])
         imgf = imgf.transpose(2,0,1)
-        #print("MY SIZES", xx, os.path.split(images[xx])[1], imgf.shape, depf.shape)
         ifiles.append(imgf)
         dfiles.append(depf)
 
@@ -91,9 +90,6 @@ def plot_img_dep(imgf, depf, depp, depdif, titl):
     ax4 = fig.add_subplot(1,ni,4)
     a4 = ax4.imshow(depdif, vmin=0,vmax=5)
     plt.title("Depth Difference")
-    #ax5 = fig.add_subplot(1,ni,5)
-    #a5 = plt.hist(err, bins=30, range=(-5,5))
-    #plt.title("Histogram of Error (m)")
     ax1.axes.xaxis.set_ticklabels([])
     ax1.axes.yaxis.set_ticklabels([])
     ax2.axes.xaxis.set_ticklabels([])
@@ -102,9 +98,6 @@ def plot_img_dep(imgf, depf, depp, depdif, titl):
     ax3.axes.yaxis.set_ticklabels([])
     ax4.axes.xaxis.set_ticklabels([])
     ax4.axes.yaxis.set_ticklabels([])
-    #ax5.axes.xaxis.set_ticklabels([])
-    #ax5.axes.yaxis.set_ticklabels([])
-    #a3.set_cmap('gray')
     plt.show()
 
 def rmse(arr1,arr2):
