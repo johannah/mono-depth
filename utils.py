@@ -61,7 +61,7 @@ def load_data(images, dmaps):
     return X, y
 
 def plot_est(imgf, depp):
-    fig = plt.figure(frameon=False, figsize=(12,8))
+    fig = plt.figure(frameon=False, figsize=(2,2))
     ni = 2
     ax1 = fig.add_subplot(1,ni,1)
     a1 = ax1.imshow(imgf)
