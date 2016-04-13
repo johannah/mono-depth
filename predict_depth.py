@@ -1,4 +1,4 @@
-# Author: Kyle Kastner
+# Author: Johanna Hansen
 # License: BSD 3-Clause
 from lasagne.layers import InputLayer, get_output, get_all_params
 from lasagne.layers import Conv2DLayer, MaxPool2DLayer
