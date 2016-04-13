@@ -60,26 +60,51 @@ def load_data(images, dmaps):
     y = y[:,None,:,:]
     return X, y
 
-
-def plot_img_dep(imgf, depf, depp):
-    # row and column sharing
-    print(imgf.dtype, depf.dtype, depp.dtype)
-    fig = plt.figure(frameon=False, figsize=(10,8))
-    ax1 = fig.add_subplot(1,3,1)
-    ax1.imshow(imgf)
+def plot_est(imgf, depp):
+    fig = plt.figure(frameon=False, figsize=(12,8))
+    ni = 2
+    ax1 = fig.add_subplot(1,ni,1)
+    a1 = ax1.imshow(imgf)
     plt.title("Image")
-    ax2 = fig.add_subplot(1,3,2)
-    ax2.imshow(depf)
-    plt.title("Ground Truth Depth")
-    ax3 = fig.add_subplot(1,3,3)
-    ax3.imshow(depp)
+    ax2 = fig.add_subplot(1,ni,2)
+    a2 = ax2.imshow(depp)
     plt.title("Estimated Depth")
+    ax1.axes.xaxis.set_ticklabels([])
+    ax1.axes.yaxis.set_ticklabels([])
+    ax2.axes.xaxis.set_ticklabels([])
+    ax2.axes.yaxis.set_ticklabels([])
+    plt.show()
+
+def plot_img_dep(imgf, depf, depp, depdif, titl):
+    # row and column sharing
+    fig = plt.figure(frameon=False, figsize=(12,8))
+    ni = 4
+    ax1 = fig.add_subplot(1,ni,1)
+    a1 = ax1.imshow(imgf)
+    plt.title("Image")
+    ax2 = fig.add_subplot(1,ni,2)
+    a2 = ax2.imshow(depf)
+    plt.title("Ground Truth Depth")
+    ax3 = fig.add_subplot(1,ni,3)
+    a3 = ax3.imshow(depp)
+    plt.title("Estimated Depth")
+    ax4 = fig.add_subplot(1,ni,4)
+    a4 = ax4.imshow(depdif, vmin=0,vmax=5)
+    plt.title("Depth Difference")
+    #ax5 = fig.add_subplot(1,ni,5)
+    #a5 = plt.hist(err, bins=30, range=(-5,5))
+    #plt.title("Histogram of Error (m)")
     ax1.axes.xaxis.set_ticklabels([])
     ax1.axes.yaxis.set_ticklabels([])
     ax2.axes.xaxis.set_ticklabels([])
     ax2.axes.yaxis.set_ticklabels([])
     ax3.axes.xaxis.set_ticklabels([])
     ax3.axes.yaxis.set_ticklabels([])
+    ax4.axes.xaxis.set_ticklabels([])
+    ax4.axes.yaxis.set_ticklabels([])
+    #ax5.axes.xaxis.set_ticklabels([])
+    #ax5.axes.yaxis.set_ticklabels([])
+    #a3.set_cmap('gray')
     plt.show()
 
 def rmse(arr1,arr2):
