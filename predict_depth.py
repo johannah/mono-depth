@@ -15,16 +15,16 @@ from theano import tensor
 import theano
 from utils import collect_data, plot_img_dep, load_data
 import sys
+# set recursion limit so pickle doesn't error
 sys.setrecursionlimit(40000)
 
 random_state = np.random.RandomState(1999)
 
 DEBUG = True
+# train on data3, test data2
 dataset = 'data3'
-#volume_path = '/Volumes/johannah_external/mono_depth/cornell_dataset/'
-#volume_path = '/media/jhansen/johannah_external/mono_depth/cornell_dataset/'
 volume_path = '../data/'
-n_epochs = 1000
+n_epochs = 200
 minibatchsize = 20
 
 
@@ -68,9 +68,6 @@ coarse_conv3 = Conv2DLayer(coarse_pool2, num_filters=128, filter_size=(3, 3),
 coarse_conv4 = Conv2DLayer(coarse_conv3, num_filters=128, filter_size=(3, 3),
                       nonlinearity=rectify, W=GlorotUniform(), pad=(1,1))
 
-#coarse_conv4 = Conv2DLayer(coarse_conv3, num_filters=64, filter_size=(3, 3),
-#                      nonlinearity=rectify, W=GlorotUniform(), pad=(1,1))
-#coarse_pool3 = MaxPool2DLayer(coarse_conv3, pool_size=(2, 2))
 coarse_conv5 = Conv2DLayer(coarse_conv4, num_filters=512, filter_size=(1, 1),
                       nonlinearity=rectify, W=GlorotUniform())
 
@@ -110,17 +107,15 @@ train_losses = []
 valid_losses = []
 for e in range(n_epochs):
     for mbn in range(0,num_images,minibatchsize):
-
-
         X_train, y_train = load_data(images[mbn:mbn+minibatchsize],
                                       dmaps[mbn:mbn+minibatchsize])
         train_loss = train_function(X_train, y_train)
         valid_loss = valid_function(X_train, y_train)
-        train_losses.append(train_loss)
-        valid_losses.append(valid_loss)
-        print("loading minibatch: %s in epoch: %s " %(mbn, e))
-        print("train: %f" % train_loss)
-        print("valid %f" % valid_loss)
+    train_losses.append(train_loss)
+    valid_losses.append(valid_loss)
+    print("loading minibatch: %s in epoch: %s " %(mbn, e))
+    print("train: %f" % train_loss)
+    print("valid %f" % valid_loss)
     if not e%10:
         fn = "trained/pda_e%03d.pkl" %e
         print("dumping to pickle: %s" %fn)
@@ -129,5 +124,5 @@ for e in range(n_epochs):
                      "predict_function":predict_function,
                      "valid_losses":valid_losses,
                      "train_losses":train_losses},
-                    open(fn, mode='wb'))
+                      open(fn, mode='wb'))
 
