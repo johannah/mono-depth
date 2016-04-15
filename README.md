@@ -1,5 +1,5 @@
 # mono-depth
-learning depth from a single image
+Experiments with learning depth from a single image.
 
 # data
 I used data from the Make3d Dataset found here:
@@ -40,10 +40,17 @@ conda env create -f mono_environment.yml
 
 # run
 To run with debug statements on cpu:
+
 THEANO_FLAGS="device=cpu,optimizer=None,compute_test_value=raise,floatX=float32" python predict_depth.py
 
 To run on cpu:
+
 THEANO_FLAGS="device=cpu,floatX=float32" python predict_depth.py
 
 To run on gpu with no debug:
+
 THEANO_FLAGS="device=gpu,floatX=float32" python predict_depth.py
+
+# bugs
+
+Error in bottom few rows of pixels 
