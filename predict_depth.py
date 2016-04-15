@@ -11,6 +11,7 @@ from deconv import TransposeConv2DLayer, Unpool2DLayer
 import pickle
 import numpy as np
 
+import os
 from theano import tensor
 import theano
 from utils import collect_data, plot_img_dep, load_data
@@ -21,14 +22,15 @@ sys.setrecursionlimit(40000)
 random_state = np.random.RandomState(1999)
 
 DEBUG = True
-# train on data3, test data2
-dataset = 'data3'
-volume_path = '../data/'
+volume_path = '../data/train/'
+model_path = 'models'
+if not os.path.exists(model_path):
+    os.mkdir(model_path)
 n_epochs = 200
 minibatchsize = 20
 
 
-images, dmaps = collect_data(volume_path, dataset)
+images, dmaps = collect_data(volume_path)
 # only keep minibatch divisible num data
 num_images = len(images) - (len(images) % minibatchsize)
 images = images[:num_images]
@@ -117,7 +119,7 @@ for e in range(n_epochs):
     print("train: %f" % train_loss)
     print("valid %f" % valid_loss)
     if not e%10:
-        fn = "trained/pda_e%03d.pkl" %e
+        fn = os.path.join(model_path, "pda_e%03d.pkl" %e)
         print("dumping to pickle: %s" %fn)
         pickle.dump({"train_function":train_function,
                      "valid_function":valid_function,

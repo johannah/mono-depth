@@ -6,33 +6,38 @@ from scipy.misc import imread, imresize
 from scipy.io import loadmat
 import numpy as np
 
+def collect_data(volume_path):
+    ipath = os.path.join(volume_path)
+    isearch = os.path.join(ipath, 'small_images', '*.jpg')
+    print("Searching for images in path: %s" %isearch)
+    images = glob(isearch)
 
-def collect_data(volume_path, dataset):
-    print("volume_path", volume_path, dataset)
-    if (dataset == 'data2') or (dataset == 'data3'):
-        ipath = os.path.join(volume_path, dataset)
-        isearch = os.path.join(ipath, 'small_images', '*.jpg')
-        images = glob(isearch)
+    dsearch = os.path.join(volume_path, 'depthmaps', '*.mat')
+    print("Searching for depthmaps in path: %s" %dsearch)
+    dmaps = glob(dsearch)
 
-        dsearch = os.path.join(ipath, 'depthmaps', '*.mat')
-        dmaps = glob(dsearch)
+    if not len(dmaps):
+        print("ERROR: Could not find any depthmaps")
+        raise
+    if not len(images):
+        print("ERROR: Could not find any images")
+        raise
+    inames = [os.path.split(xx)[1] for xx in images]
+    dnames = [os.path.split(xx)[1] for xx in dmaps]
+    depn_exp = [ii.replace('img', 'depth').replace('.jpg', '.mat') for ii in inames]
+    depn_exp = []
 
-        inames = [os.path.split(xx)[1] for xx in images]
-        dnames = [os.path.split(xx)[1] for xx in dmaps]
-        depn_exp = [ii.replace('img', 'depth').replace('.jpg', '.mat') for ii in inames]
-        depn_exp = []
+    iout = []
+    dout = []
 
-        iout = []
-        dout = []
-
-        for xx,ii in enumerate(inames):
-            de = ii.replace('img', 'depth').replace('.jpg', '.mat')
-            if de in dnames:
-                fxx = dnames.index(de)
-                iout.append(images[xx])
-                dout.append(dmaps[fxx])
-        print("FOUND %s matching images and depths" %len(iout))
-        return sorted(iout), sorted(dout)
+    for xx,ii in enumerate(inames):
+        de = ii.replace('img', 'depth').replace('.jpg', '.mat')
+        if de in dnames:
+            fxx = dnames.index(de)
+            iout.append(images[xx])
+            dout.append(dmaps[fxx])
+    print("FOUND %s matching images and depths" %len(iout))
+    return sorted(iout), sorted(dout)
 
 def load_data(images, dmaps):
     # input data - create empty dimensions because
