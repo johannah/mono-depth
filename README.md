@@ -5,9 +5,8 @@ Details and history in presentation here: https://docs.google.com/presentation/d
 
 Example Results:
 
-[[https://github.com/johannah/mono-depth/blob/master/hallway_depth.png]]
-
-[[https://github.com/johannah/mono-depth/blob/master/tree_depth.png]]
+![hallway](hallway_depth.png)
+![tree](tree_depth.png)
 
 # data
 I used data from the Make3d Dataset found here:
