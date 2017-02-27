@@ -3,6 +3,12 @@ Experiments with learning depth from a single image for course project.
 
 Details and history in presentation here: https://docs.google.com/presentation/d/1GZkUPq5xFVHfjKiVrPzIXjKb_lBb_r4KPjPVz_VMwK8/edit?usp=sharing
 
+Example Results:
+
+[[https://github.com/johannah/mono-depth/blob/master/hallway_depth.png]]
+
+[[https://github.com/johannah/mono-depth/blob/master/tree_depth.png]]
+
 # data
 I used data from the Make3d Dataset found here:
 http://make3d.cs.cornell.edu/data.html
