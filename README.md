@@ -1,5 +1,7 @@
 # mono-depth
-Experiments with learning depth from a single image.
+Experiments with learning depth from a single image for course project.
+
+Details and history in presentation here: https://docs.google.com/presentation/d/1GZkUPq5xFVHfjKiVrPzIXjKb_lBb_r4KPjPVz_VMwK8/edit?usp=sharing
 
 # data
 I used data from the Make3d Dataset found here:
